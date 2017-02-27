@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  personnel: one
+  start: 2017-02-26 11:20:41
+  completion: 2017-02-26 11:20:41
+  C1: MyString
+  C2: MyString
+
+two:
+  personnel: two
+  start: 2017-02-26 11:20:41
+  completion: 2017-02-26 11:20:41
+  C1: MyString
+  C2: MyString

@@ -1,0 +1,56 @@
+<%= form_for(c) do |f| %>
+  <% if c.errors.any? %>
+    <div id="error_explanation">
+      <!-- <h2><%= pluralize(c.errors.count, "error") %> prohibited this case from being saved:</h2> -->
+
+      <ul style="background-color: #e74c3c; margin: 0px;">
+      <% c.errors.full_messages.each do |message| %>
+        <li style="color: white" class="text-center"><%= message %></li>
+      <% end %>
+      </ul>
+      <br>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <div class="row">
+      <div class="small-3 columns">
+        <label for="middle-label" class="text-right middle"><span style="font-weight: bold;color: #34495e;">C1</span></label>
+      </div>
+      <div class="small-8 columns">
+        <%= f.text_field :C1 %>
+      </div>
+      <div class="small-1 columns"></div>
+    </div>
+    <div class="row">
+      <div class="small-3 columns">
+        <label for="middle-label" class="text-right middle"><span style="font-weight: bold;color: #34495e;">C2</span></label>
+      </div>
+      <div class="small-8 columns">
+        <%= f.text_field :C2 %>
+      </div>
+      <div class="small-1 columns"></div>
+    </div>
+
+    <div class="row">
+      <div class="small-3 columns">
+        <label for="middle-label" class="text-right middle"><span style="font-weight: bold;color: #34495e;">Assign a lawyer</span></label>
+      </div>
+      <div class="small-8 columns">
+        <%= f.select :personnel_id, @personnels.map{ |p| [p.name, p.id] } %>
+      </div>
+      <div class="small-1 columns"></div>
+    </div>
+
+    <div class="row">
+      <div class="small-3 columns">
+        <label for="middle-label" class="text-right middle"><span style="font-weight: bold;color: #34495e;"></span></label>
+      </div>
+      <div class="small-8 columns">
+        <%= f.submit 'Submit', class: 'button success', style: "font-weight: bold" %>
+      </div>
+      <div class="small-1 columns"></div>
+    </div>
+    
+  </div>
+<% end %>
