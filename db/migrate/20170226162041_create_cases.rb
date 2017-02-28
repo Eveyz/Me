@@ -4,8 +4,8 @@ class CreateCases < ActiveRecord::Migration[5.0]
       t.references :personnel, foreign_key: true
       t.timestamp :start
       t.timestamp :completion
-      t.string :C1
-      t.string :C2
+      t.string :c1
+      t.string :c2
 
       t.timestamps
     end

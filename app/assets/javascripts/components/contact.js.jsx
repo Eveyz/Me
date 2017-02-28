@@ -5,7 +5,11 @@ var Contact = React.createClass({
       from: 'amy',
       to: 'amy',
       message: '',
-      color: '#2ecc71'
+      color: '#2ecc71',
+      match_case: {},
+      conflict_cases1: [],
+      conflict_cases2: [],
+      show: false
     })
   },
 
@@ -24,7 +28,8 @@ var Contact = React.createClass({
     if (sender == receiver) {
       this.setState({
         message: "Do not send message to yourself!",
-        color: '#e67e22'
+        color: '#e67e22',
+        show: false
       });
     } else {
       $.ajax({
@@ -33,20 +38,30 @@ var Contact = React.createClass({
         data: {sender: this.state.from, receiver: this.state.to},
         content: this,
         type: 'POST',
-        success: function(qualify) {
+        success: function(data) {
+          console.log(data);
+          qualify = data["qualify"];
+          match_case = data["match_case"];
+          conflict_cases1 = data["conflict_cases1"];
+          conflict_cases2 = data["conflict_cases2"];
           this.setState({qualify: qualify});
           if (qualify) {
             this.setState({
               message: sender + " contact " + receiver + " successfully!",
-              color: '#2ecc71'
+              color: '#2ecc71',
+              show: false
             });
           } else {
             this.setState({
               message: sender + " cannot contact " + receiver + "!",
-              color: '#e74c3c'
+              color: '#e74c3c',
+              match_case: match_case,
+              conflict_cases1: this.state.conflict_cases1.concat(conflict_cases1),
+              conflict_cases2: this.state.conflict_cases2.concat(conflict_cases2),
+              show: true
             });
           }
-          console.log(qualify);
+          // console.log(qualify);
         }.bind(this),
         error: function(xhr, status, err) {
           console.error(getUrl, status, err.toString());
@@ -76,9 +91,23 @@ var Contact = React.createClass({
 
     const renderMessage = this.state.message == '' ? null : message;
 
+    let single_list = [];
+    single_list.push(this.state.match_case);
+
+    let total_list = <div>
+                        <hr/>
+                        <h4>Conflict Cases</h4>
+                        <List list={single_list} type="#2ecc71" side={this.state.from}/>
+                        <br/>
+                        <List list={this.state.conflict_cases1.concat(this.state.conflict_cases2)} type="#e67e22" side={this.state.to}/>
+                      </div>
+
+    let conflict_list = this.state.show ? total_list : null;
+
     return(
       <div className="small-9 small-centered columns">
-        <h1 style={{color: "#8e44ad"}}>Contact Simulation</h1>
+        <h2 style={{color: "#8e44ad"}}>Contact Simulation</h2>
+        <hr/>
         {renderMessage}
         <br/>
         <div className="row">
@@ -88,7 +117,7 @@ var Contact = React.createClass({
                 <label className="text-right middle"><span style={labelStyle}>From:</span></label>
               </div>
               <div className="small-10 columns">
-                <SelectBox contact_list={this.props.contact_list} selectOption={this.handleSelect} type="from"/>
+                <SelectBox list={this.props.contact_list} selectOption={this.handleSelect} type="from"/>
               </div>
             </div>
           </div>
@@ -98,12 +127,17 @@ var Contact = React.createClass({
                 <label className="text-right middle"><span style={labelStyle}>To:</span></label>
               </div>
               <div className="small-10 columns">
-                <SelectBox contact_list={this.props.contact_list} selectOption={this.handleSelect} type="to"/>
+                <SelectBox list={this.props.contact_list} selectOption={this.handleSelect} type="to"/>
               </div>
             </div>
           </div>
         </div>
-        <button className="button success" onClick={this.checkQualification}>Contact</button>
+        <br/>
+        <button className="button primary small-12 columns" onClick={this.checkQualification}>Contact</button>
+        <br/>
+        <br/>
+        {conflict_list}
+        <br/>
       </div>
     )
   }
@@ -116,7 +150,7 @@ var SelectBox = React.createClass({
   },
 
   render: function() {
-    let contact_list = this.props.contact_list;
+    let contact_list = this.props.list;
     const list = contact_list.map(function(personnel, index) {
       return <SingleOption name={personnel} key={index} />
     });
@@ -130,6 +164,56 @@ var SingleOption = React.createClass({
   render: function() {
     return (
       <option value={this.props.name}>{this.props.name}</option>
+    )
+  }
+});
+
+var List = React.createClass({
+  render() {
+    type = this.props.type;
+    side = this.props.side;
+    const list = this.props.list.map(function(item, index) {
+      return <Item data={item} key={index} type={type} side={side}/>
+    });
+    return(
+      <table>
+        <thead>
+          <tr>
+            <th>Case ID</th>
+            <th>Personnel</th>
+            <th>C1</th>
+            <th>C2</th>
+            <th>Start</th>
+            <th>Completion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list}
+        </tbody>
+      </table>
+    )
+  }
+});
+
+var Item = React.createClass({
+  render() {
+    listStyle = {
+      backgroundColor: this.props.type,
+      listStyleType: 'none',
+      color: 'white',
+      fontWeight: 'bold',
+      padding: '10px 0 10px 0',
+      marginTop: '5px'
+    }
+    return(
+      <tr>
+        <td>{this.props.data.id}</td>
+        <td>{this.props.side}</td>
+        <td>{this.props.data.c1}</td>
+        <td>{this.props.data.c2}</td>
+        <td>{this.props.data.start}</td>
+        <td>{this.props.data.completion}</td>
+      </tr>
     )
   }
 });

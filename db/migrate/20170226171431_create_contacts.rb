@@ -3,6 +3,7 @@ class CreateContacts < ActiveRecord::Migration[5.0]
     create_table :contacts do |t|
       t.string :sender
       t.string :receiver
+      t.boolean :legal
 
       t.timestamps
     end

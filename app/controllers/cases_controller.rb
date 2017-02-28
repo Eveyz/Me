@@ -30,7 +30,7 @@ class CasesController < ApplicationController
   def create
     @case = Case.new(case_params)
     @personnels = Personnel.where.not(name: 'ipo')
-    @case.start = Time.now
+    # @case.start = Time.now
 
     respond_to do |format|
       if @case.save
@@ -76,6 +76,6 @@ class CasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def case_params
-      params.fetch(:case, {}).permit(:personnel_id, :start, :completion, :C1, :C2)
+      params.fetch(:case, {}).permit(:personnel_id, :start, :completion, :c1, :c2)
     end
 end

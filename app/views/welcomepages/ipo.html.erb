@@ -1,1 +1,66 @@
-<%= link_to "Back",  root_path %>
+<div style="background-color: #F5F8FA; height: 700px;">
+  <br />
+  <br />
+  <div class="row">
+    <ul class="tabs" data-tabs id="example-tabs">
+      <li class="tabs-title is-active"><a href="#panel1" aria-selected="true"><span style="font-size: 15px;font-weight: bold; color: #e74c3c">Illegal Contacts</span></a></li>
+      <li class="tabs-title"><a href="#panel2"><span style="font-size: 15px;font-weight: bold; color: #2ecc71">Illegal Contacts</span></a></li>
+    </ul>
+    <div class="tabs-content" data-tabs-content="example-tabs">
+      <div class="tabs-panel is-active" id="panel1">
+        <% if @illegal_contacts.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th>Sender</th>
+              <th>Receiver</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @illegal_contacts.each do |ilc| %>
+            <tr>
+              <td><%= ilc.sender %></td>
+              <td><%= ilc.receiver %></td>
+              <td><%= ilc.created_at %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% else %>
+        <p>
+          Currently no illegal contacts are found
+        </p>
+        <% end %>
+      </div>
+      <div class="tabs-panel" id="panel2">
+        <% if @legal_contacts.present? %>
+        <table>
+          <thead>
+            <tr>
+              <th>Sender</th>
+              <th>Receiver</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @legal_contacts.each do |lc| %>
+            <tr>
+              <td><%= lc.sender %></td>
+              <td><%= lc.receiver %></td>
+              <td><%= lc.created_at %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% else %>
+        <h4 class="text-center" style="color: #2c3e50; font-weight: bold">
+          No legal contacts records
+        </h4>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

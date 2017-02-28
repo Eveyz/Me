@@ -41,7 +41,7 @@ namespace :database_setup do
       c1 = companies[i]
       companies.each do |c|
         if c != c1
-          start_time = 1.year.ago 
+          start_time = 1.year.ago
           week_number = rand(1..9)
           completion = start_time + (week_number*7*24*60*60)
 
@@ -50,14 +50,14 @@ namespace :database_setup do
           while condition
             personnel_name = personnel_names.sample
             personnel_id = Personnel.find_by(name: personnel_name).id
-            old_case = Case.find_by(personnel_id: personnel_id, C1: c)
+            old_case = Case.find_by(personnel_id: personnel_id, c1: c)
             unless old_case.present? or personnel_name == "ipo"
               condition = false
             end
           end
 
           c2 = c
-          Case.create!(personnel_id: personnel_id, start: start_time, completion: completion, C1: c1, C2: c2)
+          Case.create!(personnel_id: personnel_id, start: start_time, completion: completion, c1: c1, c2: c2)
         end
       end
 
@@ -69,10 +69,15 @@ namespace :database_setup do
 
   task create_documents: :environment do
     documents = Document::DOCUMENTS
-    cases = Case.all
-    if cases.present?
-      documents.each do |company|
-        Company.create!(name: "#{company}")
+    greek_size = documents.size
+    companies = Company.all
+    iteration = 1
+    index = 0
+    # cases = Case.all
+    if companies.present?
+      companies.each do |company|
+        Document.create!(name: documents[index], company_id: company.id)
+        index += 1
       end
     end
     p "Create documents done!"

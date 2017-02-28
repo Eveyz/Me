@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post 'welcomepages/send_message'
   post 'welcomepages/check_qualification'
   post 'welcomepages/check_contact_qualification'
+  post 'welcomepages/check_document_qualification'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'welcomepages#legaloffice'

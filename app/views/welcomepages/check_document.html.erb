@@ -1,1 +1,8 @@
-<%= link_to "Back",  root_path %>
+<div style="background-color: #F5F8FA; height: 700px;">
+  <br />
+  <div class="row">
+    <div class="small-9 small-centered columns">
+      <%= react_component 'DocumentList', { document_list: @documents, personnel_list: @personnels }, :div %>
+    </div>
+  </div>
+</div>
