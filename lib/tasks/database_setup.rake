@@ -70,13 +70,19 @@ namespace :database_setup do
   task create_documents: :environment do
     documents = Document::DOCUMENTS
     greek_size = documents.size
-    companies = Company.all
+    cases = Case.all
     iteration = 1
     index = 0
     # cases = Case.all
-    if companies.present?
-      companies.each do |company|
-        Document.create!(name: documents[index], company_id: company.id)
+    if cases.present?
+      cases.each do |cas|
+        if index >= greek_size
+          index = index - greek_size - 1
+        end
+        documents_name = documents[index] + cas.id.to_s
+        p documents_name
+        p cas.c1
+        Document.create!(name: documents_name, company: cas.c1, case_id: cas.id)
         index += 1
       end
     end

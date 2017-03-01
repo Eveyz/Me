@@ -19,6 +19,8 @@ var Contact = React.createClass({
     } else {
       this.setState({to: selected});
     }
+    this.setState({show: false});
+    this.setState({message: ''});
   },
 
   checkQualification: function() {
@@ -29,7 +31,7 @@ var Contact = React.createClass({
       this.setState({
         message: "Do not send message to yourself!",
         color: '#e67e22',
-        show: false
+        show: false,
       });
     } else {
       $.ajax({
@@ -56,8 +58,8 @@ var Contact = React.createClass({
               message: sender + " cannot contact " + receiver + "!",
               color: '#e74c3c',
               match_case: match_case,
-              conflict_cases1: this.state.conflict_cases1.concat(conflict_cases1),
-              conflict_cases2: this.state.conflict_cases2.concat(conflict_cases2),
+              conflict_cases1: conflict_cases1,
+              conflict_cases2: conflict_cases2,
               show: true
             });
           }
