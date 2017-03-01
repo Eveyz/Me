@@ -1,7 +1,7 @@
 class WelcomepagesController < ApplicationController
 
   def legaloffice
-
+    @cases = Case.all
   end
 
   def assign_case
@@ -17,19 +17,21 @@ class WelcomepagesController < ApplicationController
     @qualify = true
     document = params[:document]
     personnel = params[:personnel]
-    document_company_id = Document.find_by(name: document).company_id
-    company_name = Company.find(document_company_id).name
+    # document_case_id = Document.find_by(name: document).case_id
+    company_name = Document.find_by(name: document).company
     personnel_id = Personnel.find_by(name: personnel).id
     @cases = Case.where('completion IS NOT NULL AND personnel_id = ?', personnel_id)
+    @conflict_cases = []
     if @cases.present?
       @cases.each do |ca|
         if ca.c2 == company_name
           @qualify = false
-          break
+          @conflict_cases << ca
         end
       end
     end
-    render json: @qualify, status: :ok
+    response = { qualify: @qualify, conflict_cases: @conflict_cases, company_name: company_name }
+    render json: response, status: :ok
   end
 
   def ipo
@@ -54,12 +56,18 @@ class WelcomepagesController < ApplicationController
     @cases = Case.where('completion IS NOT NULL AND personnel_id = ?', sender_id)
     p "ID"
     # p @cases.first.id
+    @match_case = []
+    @conflict_cases1 = []
+    @conflict_cases2 = []
     if @cases.present?
       @cases.each do |ca|
-        @match_case = ca
-        @conflict_cases1 = Case.where("c1 = ? AND personnel_id = ?", ca.c2, receiver_id)
-        @conflict_cases2 = Case.where("c2 = ? AND personnel_id = ?", ca.c1, receiver_id)
-        break
+        @ccases1 = Case.where("c1 = ? AND personnel_id = ?", ca.c2, receiver_id)
+        @ccases2 = Case.where("c2 = ? AND personnel_id = ?", ca.c1, receiver_id)
+        if @ccases1.present? or @ccases2.present?
+          @match_case << ca
+          @conflict_cases1 += @ccases1
+          @conflict_cases2 += @ccases2
+        end
       end
       if @conflict_cases1.present? or @conflict_cases2.present?
         @qualify = false

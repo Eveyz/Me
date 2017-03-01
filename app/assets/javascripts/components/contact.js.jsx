@@ -6,7 +6,7 @@ var Contact = React.createClass({
       to: 'amy',
       message: '',
       color: '#2ecc71',
-      match_case: {},
+      match_case: [],
       conflict_cases1: [],
       conflict_cases2: [],
       show: false
@@ -93,8 +93,8 @@ var Contact = React.createClass({
 
     const renderMessage = this.state.message == '' ? null : message;
 
-    let single_list = [];
-    single_list.push(this.state.match_case);
+    let single_list = this.state.match_case;
+    // single_list.push(this.state.match_case);
 
     let total_list = <div>
                         <hr/>

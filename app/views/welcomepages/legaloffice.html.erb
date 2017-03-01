@@ -1,8 +1,57 @@
 <% provide(:title, 'ZNZ LLP') %>
-<div class="row" style="height: 700px;">
-  <h1>Welcome to ZNZ LLP</h1>
-    <%= link_to "Case Management", cases_path, class: 'button primary small-9 small-centered columns' %>
-    <%= link_to "IPO", "welcomepages/ipo", class: 'button success small-9 small-centered columns' %>
-    <%= link_to "Contact", "welcomepages/contact", class: 'button secondary small-9 small-centered columns' %>
-    <%= link_to "Check Document", "welcomepages/check_document", class: 'button warning small-9 small-centered columns' %>
+<br />
+<br />
+<div class="row">
+  <div class="small-3 columns">
+    <%= link_to "Case Management", cases_path, class: 'button primary small-12 small-centered columns' %>
+  </div>
+  <div class="small-3 columns">
+    <%= link_to "IPO", "welcomepages/ipo", class: 'button success small-12 small-centered columns' %>
+  </div>
+  <div class="small-3 columns">
+    <%= link_to "Contact", "welcomepages/contact", class: 'button secondary small-12 small-centered columns' %>
+  </div>
+  <div class="small-3 columns">
+    <%= link_to "Check Document", "welcomepages/check_document", class: 'button warning small-12 small-centered columns' %>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <p id="notice"><%= notice %></p>
+  <h1>All Cases</h1>
+
+  <% if @cases.present? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Case ID</th>
+          <th>Lawyer</th>
+          <th>C1</th>
+          <th>C2</th>
+          <th>Completed</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @cases.each do |c| %>
+          <tr>
+            <td><%= c.id %></td>
+            <td><%= Personnel.find(c.personnel_id).name %></td>
+            <td><%= c.c1 %></td>
+            <td><%= c.c2 %></td>
+            <td><i class="fa fa-check" aria-hidden="true" style="color: #2ecc71"></i></td>
+            <td><%= link_to 'Show', c %></td>
+            <td><%= link_to 'Edit', edit_case_path(c) %></td>
+            <td><%= link_to 'Destroy', c, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <br>
+  <br>
 </div>

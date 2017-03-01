@@ -58,10 +58,11 @@ namespace :database_setup do
 
           c2 = c
           Case.create!(personnel_id: personnel_id, start: start_time, completion: completion, c1: c1, c2: c2)
+          i = i + 1
         end
       end
 
-      i = i + 1
+      # i = i + 1
       cases = Case.all
     end
     p "Create cases done!"
