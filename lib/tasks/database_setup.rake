@@ -26,6 +26,7 @@ namespace :database_setup do
     #   empty = false
     # end
     i = 0
+    j = 0
     cases = Case.all
 
     while cases.size < 31
@@ -57,12 +58,16 @@ namespace :database_setup do
           end
 
           c2 = c
-          Case.create!(personnel_id: personnel_id, start: start_time, completion: completion, c1: c1, c2: c2)
-          i = i + 1
+          if j < 31
+            Case.create!(personnel_id: personnel_id, start: start_time, completion: completion, c1: c1, c2: c2)
+            j = j + 1
+          else
+            break
+          end
         end
       end
 
-      # i = i + 1
+      i = i + 1
       cases = Case.all
     end
     p "Create cases done!"
