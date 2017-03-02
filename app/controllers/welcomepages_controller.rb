@@ -31,8 +31,13 @@ class WelcomepagesController < ApplicationController
       end
     end
     if @qualify
-      Case.create!(personnel_id: @personnel_id, start: Time.now, c1: @c1, c2: @c2)
+      # create new case
+      new_case = Case.create!(personnel_id: @personnel_id, start: Time.now, c1: @c1, c2: @c2)
+      # create document about new case
+      document_name = Document::DOCUMENTS.sample + new_case.id.to_s
+      Document.create!(name: document_name, company: @c1, case_id: new_case.id)
     end
+    # send response back to ajax call
     response = { qualify: @qualify, conflict_cases: @conflict_cases, duplicated_cases: @duplicated_cases, case_personnel: @case_personnel }
     render json: response, status: :ok
   end
