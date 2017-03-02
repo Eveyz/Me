@@ -23,6 +23,7 @@ class WelcomepagesController < ApplicationController
     p @conflict_cases
     if @duplicated_cases.present?
       @duplicated = true
+      @qualify = false
       @case_personnel = Personnel.find(@duplicated_cases.first.personnel_id).name
     else
       if @conflict_cases.present?
@@ -98,6 +99,7 @@ class WelcomepagesController < ApplicationController
     if @cases.present?
       @cases.each do |ca|
         @ccases1 = Case.where("c1 = ? AND personnel_id = ?", ca.c2, receiver_id)
+        # @ccases2 = []
         @ccases2 = Case.where("c1 = ? AND personnel_id = ?", ca.c2, sender_id)
         if @ccases1.present? or @ccases2.present?
           @match_case << ca
