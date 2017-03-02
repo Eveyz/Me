@@ -53,7 +53,7 @@ namespace :database_setup do
       end
 
       if i > 9
-        i = i - 10
+        i = i%10
       else
         i = i + 1
       end
