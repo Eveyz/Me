@@ -4,6 +4,16 @@ class WelcomepagesController < ApplicationController
     @cases = Case.all
   end
 
+  def new_case
+    @company_list = Company.all.pluck(:name)
+    @c1 = Case.all.pluck(:c1)
+    @c2 = Case.all.pluck(:c2)
+  end
+
+  def create_case
+    
+  end
+
   def assign_case
 
   end

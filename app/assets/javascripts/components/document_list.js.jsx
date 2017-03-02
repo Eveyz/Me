@@ -84,7 +84,7 @@ var DocumentList = React.createClass({
 
     fontStyle= {
       fontWeight: 'bold',
-      color: '#3498db'
+      color: '#e67e22'
     }
 
     let total_list = <div>

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'welcomepages/ipo'
   get 'welcomepages/check_document'
   get 'welcomepages/contact'
+  get 'welcomepages/new_case'
+  post 'welcomepages/create_case'
   post 'welcomepages/send_message'
   post 'welcomepages/check_qualification'
   post 'welcomepages/check_contact_qualification'
