@@ -3,22 +3,22 @@
 <br />
 <div class="row">
   <div class="small-3 columns">
-    <%= link_to "New Case", "welcomepages/new_case", class: 'button primary small-12 small-centered columns' %>
+    <%= link_to "New Case", "welcomepages/new_case", class: 'button primary small-12 small-centered columns', id: 'new_case' %>
   </div>
   <div class="small-3 columns">
-    <%= link_to "Check Documents", "welcomepages/check_document", class: 'button warning small-12 small-centered columns' %>
+    <%= link_to "Check Documents", "welcomepages/check_document", class: 'button warning small-12 small-centered columns', id: 'check_document' %>
   </div>
   <div class="small-3 columns">
-    <%= link_to "Contact", "welcomepages/contact", class: 'button secondary small-12 small-centered columns' %>
+    <%= link_to "Contact", "welcomepages/contact", class: 'button secondary small-12 small-centered columns', id: 'contact' %>
   </div>
   <div class="small-3 columns">
-    <%= link_to "IPO", "welcomepages/ipo", class: 'button success small-12 small-centered columns' %>
+    <%= link_to "IPO", "welcomepages/ipo", class: 'button success small-12 small-centered columns', id: 'ipo' %>
   </div>
 </div>
 <hr />
 <div class="row">
   <p id="notice"><%= notice %></p>
-  <h1>Past Cases</h1>
+  <h1>All Cases</h1>
 
   <% if @cases.present? %>
     <table>
@@ -57,3 +57,37 @@
   <br>
   <br>
 </div>
+
+<script>
+$("#new_case").click(function(e) {
+  var password = "case";
+  var string = prompt("Please enter the password(password here is: case, just for security demo)", "");
+  if(string === null) {
+    console.log("enter your password");
+    e.preventDefault();
+    window.location.href = "<%= root_url %>";
+  } else {
+    if(string != password) {
+      alert("Wrong password! Please input: case");
+      e.preventDefault();
+      window.location.href = "<%= root_url %>";
+    }
+  }
+});
+
+$("#ipo").click(function(e) {
+  var password = "ipo";
+  var string = prompt("Please enter the password(password here is: ipo, just for security demo)", "");
+  if(string === null) {
+    console.log("enter your password");
+    e.preventDefault();
+    window.location.href = "<%= root_url %>";
+  } else {
+    if(string != password) {
+      alert("Wrong password! Please input: ipo");
+      e.preventDefault();
+      window.location.href = "<%= root_url %>";
+    }
+  }
+});
+</script>
