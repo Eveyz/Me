@@ -1,10 +1,19 @@
 <div style="background-color: #F5F8FA; height: 700px;">
   <br />
-  <br />
+  <div class="row">
+    <nav aria-label="You are here:" role="navigation">
+      <ul class="breadcrumbs">
+        <li><%= link_to 'Home', root_path %></li>
+        <li>
+          IPO
+        </li>
+      </ul>
+    </nav>
+  </div>
   <div class="row">
     <ul class="tabs" data-tabs id="example-tabs">
-      <li class="tabs-title is-active"><a href="#panel1" aria-selected="true"><span style="font-size: 15px;font-weight: bold; color: #e74c3c">Illegal Contacts</span></a></li>
-      <li class="tabs-title"><a href="#panel2"><span style="font-size: 15px;font-weight: bold; color: #2ecc71">Illegal Contacts</span></a></li>
+      <li class="tabs-title is-active"><a href="#panel1" aria-selected="true"><span style="font-size: 15px;font-weight: bold; color: #2c3e50">Illegal Contacts</span></a></li>
+      <li class="tabs-title"><a href="#panel2"><span style="font-size: 15px;font-weight: bold; color: #2c3e50">Illegal Documents Checking</span></a></li>
     </ul>
     <div class="tabs-content" data-tabs-content="example-tabs">
       <div class="tabs-panel is-active" id="panel1">
@@ -35,18 +44,18 @@
         <% end %>
       </div>
       <div class="tabs-panel" id="panel2">
-        <% if @legal_contacts.present? %>
+        <% if @illegal_check.present? %>
         <table>
           <thead>
             <tr>
-              <th>Sender</th>
-              <th>Receiver</th>
+              <th>Personnel</th>
+              <th>Document</th>
               <th>Time</th>
             </tr>
           </thead>
 
           <tbody>
-            <% @legal_contacts.each do |lc| %>
+            <% @illegal_check.each do |lc| %>
             <tr>
               <td><%= lc.sender %></td>
               <td><%= lc.receiver %></td>

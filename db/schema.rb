@@ -35,9 +35,10 @@ ActiveRecord::Schema.define(version: 20170226171431) do
   create_table "contacts", force: :cascade do |t|
     t.string   "sender"
     t.string   "receiver"
+    t.string   "contact_type"
     t.boolean  "legal"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "documents", force: :cascade do |t|

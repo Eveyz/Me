@@ -50,7 +50,7 @@ var DocumentList = React.createClass({
             color: '#e74c3c',
             conflict_cases: conflict_cases,
             company_name: company_name,
-            show: true
+            show: true,
           });
         }
         console.log(qualify);
@@ -99,28 +99,30 @@ var DocumentList = React.createClass({
     let conflict_list = this.state.show ? total_list : null;
 
     return(
-      <div className="row">
+      <div className="small-9 small-centered columns">
         <h2 style={{color: "#8e44ad"}}>Check Document</h2>
         <hr/>
         {renderMessage}
         <br/>
-        <div className="small-6 columns">
-          <div className="row">
-            <div className="small-5 columns">
-              <label className="text-right middle"><span style={labelStyle}>Choose Personnel</span></label>
-            </div>
-            <div className="small-7 columns">
-              <SelectBox list={this.props.personnel_list} selectOption={this.handleSelect} type="personnel"/>
+        <div className="row">
+          <div className="small-6 columns">
+            <div className="row">
+              <div className="small-5 columns">
+                <label className="text-right middle"><span style={labelStyle}>Choose Personnel</span></label>
+              </div>
+              <div className="small-7 columns">
+                <SelectBox list={this.props.personnel_list} selectOption={this.handleSelect} type="personnel"/>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="small-6 columns">
-          <div className="row">
-            <div className="small-5 columns">
-              <label className="text-right middle"><span style={labelStyle}>Choose Document</span></label>
-            </div>
-            <div className="small-7 columns">
-              <SelectBox list={this.props.document_list} selectOption={this.handleSelect} type="doc"/>
+          <div className="small-6 columns">
+            <div className="row">
+              <div className="small-5 columns">
+                <label className="text-right middle"><span style={labelStyle}>Choose Document</span></label>
+              </div>
+              <div className="small-7 columns">
+                <SelectBox list={this.props.document_list} selectOption={this.handleSelect} type="doc"/>
+              </div>
             </div>
           </div>
         </div>

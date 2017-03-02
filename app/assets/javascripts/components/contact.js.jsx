@@ -9,6 +9,8 @@ var Contact = React.createClass({
       match_case: [],
       conflict_cases1: [],
       conflict_cases2: [],
+      conflict_name1: '',
+      conflict_name2: '',
       show: false
     })
   },
@@ -46,6 +48,8 @@ var Contact = React.createClass({
           match_case = data["match_case"];
           conflict_cases1 = data["conflict_cases1"];
           conflict_cases2 = data["conflict_cases2"];
+          conflict_name1 = data["conflict_name1"];
+          conflict_name2 = data["conflict_name2"];
           this.setState({qualify: qualify});
           if (qualify) {
             this.setState({
@@ -60,6 +64,8 @@ var Contact = React.createClass({
               match_case: match_case,
               conflict_cases1: conflict_cases1,
               conflict_cases2: conflict_cases2,
+              conflict_name1: conflict_name1,
+              conflict_name2: conflict_name2,
               show: true
             });
           }
@@ -99,9 +105,9 @@ var Contact = React.createClass({
     let total_list = <div>
                         <hr/>
                         <h4>Conflict Cases</h4>
-                        <List list={single_list} type="#2ecc71" side={this.state.from}/>
+                        <List list={single_list} type="#2ecc71" side={this.state.conflict_name1}/>
                         <br/>
-                        <List list={this.state.conflict_cases1.concat(this.state.conflict_cases2)} type="#e67e22" side={this.state.to}/>
+                        <List list={this.state.conflict_cases1.concat(this.state.conflict_cases2)} type="#e67e22" side={this.state.conflict_name2}/>
                       </div>
 
     let conflict_list = this.state.show ? total_list : null;
@@ -206,7 +212,8 @@ var Item = React.createClass({
       fontWeight: 'bold',
       padding: '10px 0 10px 0',
       marginTop: '5px'
-    }
+    };
+    let completion = this.props.data.completion ? this.props.data.completion : <i className="fa fa-times" aria-hidden="true" style={{color: '#e74c3c'}}></i>;
     return(
       <tr>
         <td>{this.props.data.id}</td>
@@ -214,7 +221,7 @@ var Item = React.createClass({
         <td>{this.props.data.c1}</td>
         <td>{this.props.data.c2}</td>
         <td>{this.props.data.start}</td>
-        <td>{this.props.data.completion}</td>
+        <td>{completion}</td>
       </tr>
     )
   }
