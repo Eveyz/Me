@@ -59,7 +59,7 @@ class WelcomepagesController < ApplicationController
         if ca.c2 == company_name
           @qualify = false
           @conflict_cases << ca
-          # Contact.create!(sender: personnel, receiver: document, contact_type: 'document', legal: @qualify)
+          Contact.create!(sender: personnel, receiver: document, contact_type: 'document', legal: @qualify)
         end
       end
     end
@@ -109,7 +109,7 @@ class WelcomepagesController < ApplicationController
       end
       if @conflict_cases1.present? or @conflict_cases2.present?
         @qualify = false
-        # Contact.create!(sender: sender, receiver: receiver, contact_type: 'contact', legal: @qualify)
+        Contact.create!(sender: sender, receiver: receiver, contact_type: 'contact', legal: @qualify)
       end
       p @qualify
     end
