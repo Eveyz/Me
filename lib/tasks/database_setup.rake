@@ -19,26 +19,12 @@ namespace :database_setup do
   task create_cases: :environment do
     companies = Company::COMPANIES
     personnel_names = Personnel::NAMES
-
-    # @personnels = Personnel.all
-    # empty = true
-    # if @personnels.present?
-    #   empty = false
-    # end
     i = 0
     j = 0
     cases = Case.all
 
-    while cases.size < 31
-      # create case time
-
-      # if empty
-      #   personnel = Personnel.find(name: "marek")
-      #   c1 = "Acme"
-      #   c2 = "Shark"
-      # else
-      #   personnel = Personnel.find()
-      # end
+    while j < 31
+      # p j
       c1 = companies[i]
       companies.each do |c|
         if c != c1
@@ -48,17 +34,16 @@ namespace :database_setup do
 
           condition = true
 
-          while condition
-            personnel_name = personnel_names.sample
-            personnel_id = Personnel.find_by(name: personnel_name).id
-            old_case = Case.find_by(personnel_id: personnel_id, c1: c)
-            unless old_case.present? or personnel_name == "ipo"
-              condition = false
-            end
+          personnel_name = personnel_names.sample
+          personnel_id = Personnel.find_by(name: personnel_name).id
+          old_case = Case.where(personnel_id: personnel_id, c1: c)
+          duplicate_case = Case.where(c1: c1, c2: c)
+          if old_case.present? or personnel_name == "ipo" or duplicate_case.present?
+            condition = false
           end
 
           c2 = c
-          if j < 31
+          if j < 31 and condition
             Case.create!(personnel_id: personnel_id, start: start_time, completion: completion, c1: c1, c2: c2)
             j = j + 1
           else
@@ -67,7 +52,12 @@ namespace :database_setup do
         end
       end
 
-      i = i + 1
+      if i > 9
+        i = i - 10
+      else
+        i = i + 1
+      end
+      p i
       cases = Case.all
     end
     p "Create cases done!"
