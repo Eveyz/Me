@@ -10,45 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226171431) do
+ActiveRecord::Schema.define(version: 20170226161659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "cases", force: :cascade do |t|
-    t.integer  "personnel_id"
-    t.datetime "start"
-    t.datetime "completion"
-    t.string   "c1"
-    t.string   "c2"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["personnel_id"], name: "index_cases_on_personnel_id", using: :btree
-  end
-
-  create_table "companies", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "contacts", force: :cascade do |t|
-    t.string   "sender"
-    t.string   "receiver"
-    t.string   "contact_type"
-    t.boolean  "legal"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  create_table "documents", force: :cascade do |t|
-    t.string   "name"
-    t.string   "company"
-    t.integer  "case_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["case_id"], name: "index_documents_on_case_id", using: :btree
-  end
 
   create_table "personnels", force: :cascade do |t|
     t.string   "name"
@@ -58,6 +23,4 @@ ActiveRecord::Schema.define(version: 20170226171431) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "cases", "personnels"
-  add_foreign_key "documents", "cases"
 end
